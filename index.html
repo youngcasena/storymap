@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Global Distribution of Lions</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Global Distribution of Lions</h1>
+    <p>
+        Lions are one of the most iconic and majestic creatures on Earth, known as the "King of the Jungle." Historically, lions were found throughout Africa, Asia, and Europe. However, their populations have drastically declined due to habitat loss, human-wildlife conflict, and poaching. Today, lions primarily inhabit the savannas of sub-Saharan Africa, with a small population of Asiatic lions surviving in the Gir Forest of India.
+    </p>
+    <p>
+        This map highlights some of the key regions where lions are found, showcasing the varying population sizes and the unique characteristics of each habitat. From the Maasai Mara in Kenya to the Gir Forest in India, each location plays a crucial role in the conservation of these magnificent animals. Explore the map to learn more about the distribution and population of lions around the world.
+    </p>
+    <div id="map"></div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map and set its view to Africa's coordinates and zoom level
+        var map = L.map('map').setView([0, 20], 3);
+
+        // Add a tile layer to the map (OpenStreetMap tiles)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Data of lion populations around the world
+        var lionPopulations = [
+            { location: [ 0.0236, 37.9062 ], region: 'Kenya', population: 2000, description: 'Lions in the Maasai Mara National Reserve' },
+            { location: [ -1.9403, 29.8739 ], region: 'Rwanda', population: 30, description: 'Lions in Akagera National Park' },
+            { location: [ -18.6657, 35.5296 ], region: 'Mozambique', population: 1200, description: 'Lions in Gorongosa National Park' },
+            { location: [ 21.1996, 70.8022 ], region: 'India', population: 650, description: 'Lions in Gir Forest National Park' },
+            { location: [ -22.9576, 18.4904 ], region: 'Namibia', population: 600, description: 'Lions in Etosha National Park' },
+            { location: [ -1.3733, 36.8219 ], region: 'Tanzania', population: 1500, description: 'Lions in Serengeti National Park' },
+            { location: [ 8.7832, 34.5085 ], region: 'Chad', population: 250, description: 'Lions in Zakouma National Park' },
+            { location: [ -19.8579, 23.1047 ], region: 'Botswana', population: 2000, description: 'Lions in Chobe National Park' },
+            { location: [ -23.9884, 31.5547 ], region: 'South Africa', population: 2000, description: 'Lions in Kruger National Park' }
+        ];
+
+        // Add circle markers to the map
+        lionPopulations.forEach(function(lion) {
+            var circleMarker = L.circleMarker(lion.location, {
+                radius: Math.sqrt(lion.population) / 2, // Size based on population
+                color: '#ff7800',
+                fillColor: '#ff7800',
+                fillOpacity: 0.5
+            });
+
+            circleMarker.bindPopup('<b>' + lion.region + '</b><br>Population: ' + lion.population + '<br>' + lion.description);
+            circleMarker.addTo(map);
+        });
+    </script>
+</body>
+</html>
